@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Application</title>
+</head>
+<body>
+<h1>Welcome to the Chat Room</h1>
+<div id="chat-box">
+  <!-- 聊天消息将在这里显示 -->
+</div>
+<input type="text" id="message-input" placeholder="Type your message...">
+<button onclick="sendMessage()">Send</button>
+
+<script>
+  var socket = new WebSocket("ws//localhost:8088/ws");
+
+  socket.onopen = function (event) {
+    console.log("WebSocket connection opened:", event);
+  };
+
+  socket.onmessage = function (event) {
+    // 处理接收到的消息
+    var chatBox = document.getElementById("chat-box");
+    chatBox.innerHTML += "<p>" + event.data + "</p>";
+  };
+
+  function sendMessage() {
+    var messageInput = document.getElementById("message-input");
+    var message = messageInput.value;
+
+    // 将消息发送到服务器
+    socket.send(message);
+
+    // 清空输入框
+    messageInput.value = "";
+  }
+</script>
+</body>
+</html>

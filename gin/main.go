@@ -54,7 +54,7 @@ func main() {
 
 	//传参
 	//user?userid=xxx&username=lijianhua
-	r.GET("/user/info", myHandler(), func(context *gin.Context) {
+	r.GET("/user", myHandler(), func(context *gin.Context) {
 
 		// 取出中间件中的值
 		usersession := context.MustGet("userSession")
